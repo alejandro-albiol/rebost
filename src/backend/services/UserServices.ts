@@ -2,6 +2,7 @@ import { ApiResponse } from '../models/interfaces/ApiResponse.js';
 import { CreateUserDto } from '../models/dtos/CreateUserDto.js';
 import pool from '../configuration/dataBaseConfig.js';
 import { PasswordServices } from './PasswordServices.js';
+import { AuthenticateUserDto } from '../models/dtos/AuthenticateUserDto.js';
 
 export class UserServices {
     static async createNewUser(newUserData: CreateUserDto): Promise<ApiResponse> {
@@ -41,4 +42,54 @@ export class UserServices {
             };
         }
     }
+
+    static async authenticateUser(userData: AuthenticateUserDto): Promise<ApiResponse> {
+        try {
+            const queryString = `
+                SELECT id, username, email, password_hash
+                FROM "users"
+                WHERE username = $1;
+            `;
+    
+            const result = await pool.query(queryString, [userData.username]);
+    
+            if (result.rowCount === 0) {
+                return {
+                    success: false,
+                    message: 'User not found',
+                };
+            }
+    
+            const user = result.rows[0];
+    
+            const isPasswordValid = await PasswordServices.comparePassword(
+                userData.password,
+                user.password_hash
+            );
+    
+            if (!isPasswordValid) {
+                return {
+                    success: false,
+                    message: 'Invalid password',
+                };
+            }
+    
+            return {
+                success: true,
+                message: 'User authenticated successfully',
+                data: {
+                    id: user.id,
+                    username: user.username,
+                    email: user.email,
+                },
+            };
+        } catch (error: any) {
+            return {
+                success: false,
+                message: 'Error authenticating user',
+                errorCode: error.code || 'UNKNOWN_ERROR',
+            };
+        }
+    }
+    
 }

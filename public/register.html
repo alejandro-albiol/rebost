@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/register.css">
-    <title>Inicio de sesión</title>
-</head>
-<body>
-    <h1>Inicio de sesión</h1>
-    <form action="/api/v1/users/register" method="post">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/register.css" />
+    <title>Create account</title>
+  </head>
+  <body>
+    <h1>Register</h1>
+    <div class="form-container">
+      <form action="/api/v1/users/register" method="post">
         <p>
-            <label for="email-field">Email:</label>
-            <input type="text" name="email" id="email-field">
+          <label for="username-field">Username:</label>
+          <input type="text" name="username" id="username-field" />
         </p>
         <p>
-            <label for="password-field">Password:</label>
-            <input type="password" name="password" id="password-field">
+          <label for="email-field">Email:</label>
+          <input type="text" name="email" id="email-field" />
         </p>
         <p>
-            <button type="submit">Iniciar sesión</button>
+          <label for="password-field">Password:</label>
+          <input type="password" name="password" id="password-field" />
         </p>
-    </form>
-    <p>
-        <a href="newUser.html">Registrarse</a>
-    </p>
-</body>
+        <p>
+          <button type="submit">Register</button>
+        </p>
+      </form>
+      <p>
+        <a href="login.html">Log in</a>
+      </p>
+    </div>
+  </body>
 </html>
