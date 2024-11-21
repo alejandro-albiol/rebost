@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/newUser.css">
+    <title>Nuevo usuario</title>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Nuevo usuario</h1>
+        <form action="/api/v1/users/register" method="post">
+            <p>
+                <label for="name-field">Nombre:</label>
+                <input type="text" name="name" id="name-field">
+            </p>
+            <p>
+                <label for="firstsurname-field">Apellido:</label>
+                <input type="text" name="firstsurname" id="firstsurname-field">
+            </p>
+            <p>
+                <label for="username-field">Username:</label>
+                <input type="text" name="username" id="username-field">
+            </p>
+            <p>
+                <label for="email-field">Email:</label>
+                <input type="text" name="email" id="email-field">
+            </p>
+            <p>
+                <label for="password-field">Password:</label>
+                <input type="password" name="password" id="password-field">
+            </p>
+            <p>
+                <button type="submit">Enviar</button>
+            </p>
+        </form>
+    </div>
+</body>
+</html>

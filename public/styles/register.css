@@ -1,0 +1,86 @@
+/* Estilos globales */
+body {
+    font-family: 'Arial', sans-serif; /* Tipografía sencilla y moderna */
+    background-color: #f8f5f2; /* Tono beige claro */
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Los elementos se organizarán de arriba hacia abajo */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    text-align: center; /* Centrado de todo el contenido */
+}
+
+/* Encabezado */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d62300; /* Rojo Burger King */
+    margin-bottom: 30px; /* Espacio entre el título y el formulario */
+    line-height: 1.4;
+    width: 80%; /* Limita el ancho para que no ocupe todo el espacio */
+}
+
+/* Formulario */
+form {
+    background-color: #fff;
+    padding: 20px;
+    border: 2px solid #e2e2e2;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 30px; /* Espacio debajo del formulario */
+}
+
+/* Etiquetas */
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+    color: #d62300; /* Rojo Burger King */
+}
+
+/* Campos de entrada */
+input[type="text"],
+input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+}
+
+/* Botón */
+button {
+    background-color: #ffc107; /* Amarillo Burger King */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #d62300; /* Rojo Burger King en el hover */
+}
+
+/* Enlace para registrarse */
+a {
+    color: #d62300; /* Rojo Burger King */
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+a:hover {
+    color: #ffc107; /* Amarillo Burger King al pasar el mouse */
+}

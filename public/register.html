@@ -3,14 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles/register.css">
+    <title>Inicio de sesión</title>
 </head>
 <body>
+    <h1>Inicio de sesión</h1>
     <form action="/api/v1/users/register" method="post">
-        <p>
-            <label for="username-field">Username:</label>
-            <input type="text" name="username" id="username-field">
-        </p>
         <p>
             <label for="email-field">Email:</label>
             <input type="text" name="email" id="email-field">
@@ -19,6 +17,12 @@
             <label for="password-field">Password:</label>
             <input type="password" name="password" id="password-field">
         </p>
+        <p>
+            <button type="submit">Iniciar sesión</button>
+        </p>
     </form>
+    <p>
+        <a href="newUser.html">Registrarse</a>
+    </p>
 </body>
 </html>

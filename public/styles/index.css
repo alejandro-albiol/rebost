@@ -1,0 +1,41 @@
+/* Estilos globales */
+body {
+    font-family: 'Arial', sans-serif; /* Tipografía sencilla y moderna */
+    background-color: #f8f5f2; /* Tono beige claro */
+    margin: 0;
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos estén en columna */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+    text-align: center; /* Centrado de todo el contenido */
+}
+
+/* Encabezado */
+h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d62300; /* Rojo Burger King */
+    margin-bottom: 30px; /* Espacio entre el título y el botón */
+    line-height: 1.4;
+    width: 80%; /* Limita el ancho para que no ocupe todo el espacio */
+}
+
+/* Botón */
+button {
+    background-color: #ffc107; /* Amarillo Burger King */
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #d62300; /* Rojo Burger King en el hover */
+}
