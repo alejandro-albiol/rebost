@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/homePage.css">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>Recipe creation and shopping lists</h1>
+    <div class="container">
+        <div class="form-container">
+            <h2>Ingredients for the recipe</h2>
+            <form id="ingredientForm">
+                <label for="ingredient">Ingredients:</label>
+                <input type="text" id="ingredient" name="ingredient" placeholder="Example: Tomato" required>
+                <button type="submit">Create recipe</button>
+            </form>
+        </div>
+        <div class="right-section">
+            <div class="form-container">
+                <h2>Add products to the shopping list</h2>
+                <form id="productForm">
+                    <label for="product">Products:</label>
+                    <input type="text" id="product" name="product" placeholder="Example: Bread" required>
+                    <button type="submit">Add product</button>
+                </form>
+                <h2>Shopping list</h2>
+                <ul id="productList"></ul>
+            </div>
+
+        </div>
+    </div>
+    <button>Storage</button>
+</body>
+</html>
