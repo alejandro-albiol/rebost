@@ -1,18 +1,18 @@
 import pool from '../configuration/dataBaseConfig.js';
+import { CreateIngredientDto } from '../models/dtos/CreateIngredientDto.js';
 import { ApiResponse } from '../models/interfaces/ApiResponse.js';
 import { Ingredient } from '../models/interfaces/Ingredient.js';
 import { IngredientFormat } from '../models/interfaces/IngredientFormat.js';
 
 export class IngredientService {
-    static async createIngredient(newIngredient: Ingredient): Promise<ApiResponse> {
-        try {
-            const format = `${newIngredient.format.value} ${newIngredient.format.unit}`;
+    static async createIngredient(newIngredient: CreateIngredientDto): Promise<ApiResponse> {
+        try {;
             const query = `
                 INSERT INTO ingredients (name, format)
                 VALUES ($1, $2)
                 RETURNING id, name, format;
             `;
-            const result = await pool.query(query, [newIngredient.name, format]);
+            const result = await pool.query(query, [newIngredient.name, newIngredient.format]);
             return {
                 success: true,
                 message: 'Ingredient created successfully',
@@ -31,19 +31,14 @@ export class IngredientService {
     static async getAllIngredients(): Promise<ApiResponse> {
         try {
             const query = `
-                SELECT id, name, format
+                SELECT *
                 FROM ingredients;
             `;
             const result = await pool.query(query);
-            const ingredients = result.rows.map(row => ({
-                id: row.id,
-                name: row.name,
-                format: IngredientService.parseIngredientFormat(row.format),
-            }));
             return {
                 success: true,
                 message: 'Ingredients retrieved successfully',
-                data: ingredients,
+                data: result,
             };
         } catch (error: any) {
             return {
