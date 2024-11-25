@@ -3,7 +3,7 @@ import { IngredientController } from '../controllers/IngredientController.js';
 
 const ingredientRouter = Router();
 
-ingredientRouter.post('/', IngredientController.create);
-ingredientRouter.get('/', IngredientController.getAll);
+ingredientRouter.post('/', IngredientController.registerIngredient);
+ingredientRouter.get('/', IngredientController.getAllIngredients);
 
 export default ingredientRouter;

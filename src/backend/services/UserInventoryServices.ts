@@ -1,16 +1,22 @@
 import pool from '../configuration/dataBaseConfig.js';
+import { IngredientInInventoryDto } from '../models/dtos/IngredientInInventoryDto.js';
 import { ApiResponse } from '../models/interfaces/ApiResponse.js';
-import { UserInventory } from '../models/interfaces/UserInventory.js';
 
 export class UserInventoryService {
-    static async addIngredientToInventory(newingredientToInventory:UserInventory): Promise<ApiResponse> {
+    static async addIngredientToInventory(newingredientToInventory:IngredientInInventoryDto): Promise<ApiResponse> {
         try {
             const query = `
                 INSERT INTO user_inventory (user_id, ingredient_id, quantity, expiry_date, is_available)
                 VALUES ($1, $2, $3, $4, $5)
                 RETURNING id, ingredient_id, quantity, expiry_date, is_available;
             `;
-            const result = await pool.query(query, [newingredientToInventory.user_id, newingredientToInventory.ingredient_id, newingredientToInventory.quantity, newingredientToInventory.expiry_date, newingredientToInventory.is_available]);
+            const result = await pool.query(query, [
+                newingredientToInventory.user_id, 
+                newingredientToInventory.ingredient_id, 
+                newingredientToInventory.quantity, 
+                newingredientToInventory.expiry_date, 
+                newingredientToInventory.is_available]);
+
             return {
                 success: true,
                 message: 'Ingredient added to inventory successfully',
