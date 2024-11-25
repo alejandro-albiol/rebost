@@ -13,7 +13,7 @@ export class UserController {
                 success: false,
                 message: 'All fields (username, email, password) are required.',
             });
-            return; // Asegura que no se sigue ejecutando el código
+            return;
         }
 
         try {
@@ -40,15 +40,15 @@ export class UserController {
                 success: false,
                 message: 'Username and password are required.',
             });
-            return; // Asegura que no se sigue ejecutando el código
+            return;
         }
 
         try {
             const response: ApiResponse = await UserServices.authenticateUser(loginData);
             if (response.success) {
-                res.status(200).json(response); // Autenticación exitosa
+                res.status(200).json(response);
             } else {
-                res.status(401).json(response); // Credenciales incorrectas
+                res.status(401).json(response);
             }
         } catch (error: any) {
             res.status(500).json({
