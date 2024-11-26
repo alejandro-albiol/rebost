@@ -4,7 +4,7 @@ import { ApiResponse } from '../models/interfaces/ApiResponse.js';
 import { Ingredient } from '../models/interfaces/Ingredient.js';
 import { IngredientFormat } from '../models/interfaces/IngredientFormat.js';
 
-export class IngredientService {
+export class IngredientServices {
     static async createIngredient(newIngredient: CreateIngredientDto): Promise<ApiResponse> {
         try {;
             const query = `
@@ -53,4 +53,31 @@ export class IngredientService {
         const [value, unit] = format.split(' ');
         return { value: parseFloat(value), unit: unit as IngredientFormat['unit'] };
     }
+
+    static async findOrCreateIngredient(ingredientToAdd:Ingredient): Promise<number> {
+        try {
+            const query = `
+                SELECT id 
+                FROM ingredients 
+                WHERE name = $1;
+            `;
+            const result = await pool.query(query, [ingredientToAdd.name]);
+    
+            if (result && result.rowCount && result.rowCount > 0) {
+                return result.rows[0].id;
+            } else {
+                const insertIngredientQuery = `
+                    INSERT INTO ingredients (name, format)
+                    VALUES ($1, $2)
+                    RETURNING id;
+                `;
+                const newIngredient = await pool.query(insertIngredientQuery, [ingredientToAdd.name, ingredientToAdd.format]);
+                return newIngredient.rows[0].id;
+            }
+        } catch (error: any) {
+            console.error('Error in findOrCreateIngredient:', error);
+            throw new Error('Error finding or creating ingredient');
+        }
+    }
+    
 }

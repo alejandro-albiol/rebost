@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.static(publicPath));
 
 app.use("/", staticRouter);
-app.use("/api/v1/", apiRouter);
+app.use("/api/v1", apiRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
