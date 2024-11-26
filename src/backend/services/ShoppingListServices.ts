@@ -1,4 +1,5 @@
 import pool from "../configuration/dataBaseConfig.js";
+import { IngredientToShoppingListDto } from "../models/dtos/IngredientInShoppingListDto.js";
 import { ApiResponse } from "../models/interfaces/ApiResponse.js";
 import { Ingredient } from "../models/interfaces/Ingredient.js";
 import { ShoppingList } from "../models/interfaces/ShoppingList.js";
@@ -74,20 +75,16 @@ export class ShoppingListServices {
         }
     }
 
-    static async addIngredientToShoppingList(
-        shoppingListId: number,
-        ingredient: Ingredient,
-        quantity:number
-    ): Promise<ApiResponse> {
+    static async addIngredientToShoppingList(ingredientToAdd:IngredientToShoppingListDto): Promise<ApiResponse> {
         try {
-            const ingredientId = await IngredientServices.findOrCreateIngredient(ingredient);
+            const ingredientId = await IngredientServices.findOrCreateIngredient(ingredientToAdd.ingredient);
     
             const query = `
                 INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, quantity, is_purchased)
                 VALUES ($1, $2, $3, $4)
                 RETURNING id, shopping_list_id, ingredient_id;
             `;
-            const result = await pool.query(query, [shoppingListId, ingredientId, quantity, false]);
+            const result = await pool.query(query, [ingredientToAdd.shoppingListId, ingredientId, ingredientToAdd.quantity, false]);
     
             return {
                 success: true,
@@ -101,6 +98,26 @@ export class ShoppingListServices {
                 message: 'Error adding ingredient to shopping list',
                 errorCode: error.code || 'UNKNOWN_ERROR',
             };
+        }
+    }
+    static async toggleItemPurchasedStatus(itemId: number): Promise<boolean> {
+        try {
+            const query = `
+                UPDATE shopping_list_items
+                SET is_purchased = NOT is_purchased
+                WHERE id = $1
+                RETURNING is_purchased;
+            `;
+            const result = await pool.query(query, [itemId]);
+    
+            if (result.rowCount === 0) {
+                throw new Error('Item not found');
+            }
+    
+            return result.rows[0].is_purchased;
+        } catch (error: any) {
+            console.error('Error in toggleItemPurchasedStatus:', error);
+            throw new Error('Error updating item status');
         }
     }
     

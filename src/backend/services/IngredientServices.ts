@@ -71,7 +71,10 @@ export class IngredientServices {
                     VALUES ($1, $2)
                     RETURNING id;
                 `;
-                const newIngredient = await pool.query(insertIngredientQuery, [ingredientToAdd.name, ingredientToAdd.format]);
+                const format = ingredientToAdd.format 
+                    ? JSON.stringify(ingredientToAdd.format)
+                    : null;
+                const newIngredient = await pool.query(insertIngredientQuery, [ingredientToAdd.name, format]);
                 return newIngredient.rows[0].id;
             }
         } catch (error: any) {
