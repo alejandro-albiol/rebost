@@ -13,16 +13,18 @@
             <h2>Ingredients for the recipe</h2>
             <form id="ingredientForm" action="api/v1/shoppinglist/:ingredientId">
                 <label for="ingredient">Ingredients:</label>
-                <input type="text" id="ingredient" name="ingredient" placeholder="Example: Tomato" required>
+                <input type="text" id="productForRecipeAI" name="productForRecipeAI" placeholder="Example: Tomato" required>
                 <button type="submit">Create recipe</button>
             </form>
         </div>
         <div class="right-section">
             <div class="form-container">
                 <h2>Add products to the shopping list</h2>
-                <form id="productForm">
-                    <label for="product">Products:</label>
-                    <input type="text" id="product" name="product" placeholder="Example: Bread" required>
+                <form id="addToShoppingList">
+                    <label for="product">Ingredient:</label>
+                    <input type="text" id="name" name="name" placeholder="Example: Bread" required>
+                    <label for="product">Quantity:</label>
+                    <input type="text" id="quantity" name="quantity" placeholder="Example: 2" required>
                     <button type="submit">Add product</button>
                 </form>
                 <h2>Shopping list</h2>

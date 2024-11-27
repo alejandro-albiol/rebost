@@ -84,3 +84,36 @@ a {
 a:hover {
     color: #ffc107; /* Amarillo Burger King al pasar el mouse */
 }
+ 
+  input:focus + .help-text {
+    display: block;
+  }
+  .help-text {
+    display: none;
+    color: #666;
+    font-size: 0.8em;
+    margin-top: 5px;
+    width: 300px; /* Ancho fijo para todos los mensajes de ayuda */
+    min-height: 1.2em; /* Altura mínima aunque esté vacío */
+    position: absolute; /* Para que no afecte al flujo del documento */
+  }
+  
+  /* Agregamos posición relativa al contenedor */
+  p {
+    position: relative;
+    margin-bottom: 25px; /* Espacio para el texto de ayuda */
+  }
+  
+  input:focus + .help-text {
+    display: block;
+  }
+  /* ... existing code ... */
+
+form button {
+    margin-top: 30px; /* Aumentamos el margen superior del botón */
+  }
+  
+  /* O alternativamente, si prefieres ajustar el espacio desde el último campo */
+  form p:last-of-type {
+    margin-bottom: 35px; /* Aumentamos el margen inferior del último párrafo */
+  }
