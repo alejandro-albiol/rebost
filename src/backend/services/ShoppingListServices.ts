@@ -1,4 +1,5 @@
 import pool from "../configuration/dataBaseConfig.js";
+import { CreateShoppingListDto } from "../models/dtos/CreateShoppingListDto.js";
 import { IngredientToShoppingListDto } from "../models/dtos/IngredientToShoppingListDto.js";
 import { ApiResponse } from "../models/interfaces/ApiResponse.js";
 import { Ingredient } from "../models/interfaces/Ingredient.js";
@@ -6,7 +7,7 @@ import { ShoppingList } from "../models/interfaces/ShoppingList.js";
 import { IngredientServices } from "./IngredientServices.js";
 
 export class ShoppingListServices {
-    static async createShoppingList(newShoppingList:ShoppingList): Promise<ApiResponse> {
+    static async createShoppingList(newShoppingList:CreateShoppingListDto): Promise<ApiResponse> {
         try {
             const query = `
                 INSERT INTO shopping_lists (name, created_at, created_by)
@@ -32,7 +33,7 @@ export class ShoppingListServices {
             };
         }
     }
-    static async getShoppingListByUserId(userId: number): Promise<ApiResponse> {
+    static async getShoppingListContentByUserId(userId: number): Promise<ApiResponse> {
         try {
             const query = `
                 SELECT 
@@ -75,31 +76,49 @@ export class ShoppingListServices {
         }
     }
 
-    static async addIngredientToShoppingList(ingredientToAdd:IngredientToShoppingListDto): Promise<ApiResponse> {
+    static async getOrCreateShoppingListByUserId(userId: number): Promise<ApiResponse<number>> {
         try {
-            const ingredientId = await IngredientServices.findOrCreateIngredient(ingredientToAdd.ingredient);
-    
             const query = `
-                INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, quantity, is_purchased)
-                VALUES ($1, $2, $3, $4)
-                RETURNING id, shopping_list_id, ingredient_id;
+                SELECT id FROM shopping_lists WHERE created_by = $1;
             `;
-            const result = await pool.query(query, [ingredientToAdd.shoppingListId, ingredientId, ingredientToAdd.quantity, false]);
+            const result = await pool.query(query, [userId]);
     
-            return {
-                success: true,
-                message: 'Ingredient added to shopping list successfully',
-                data: result.rows[0],
-            };
-        } catch (error: any) {
-            console.error('Error in addIngredientToShoppingList:', error);
+            if (result && result.rowCount !== null && result.rowCount > 0) {
+                return {
+                    success: true,
+                    data: result.rows[0].id,
+                    message: 'Shopping list found successfully',
+                };
+            }
+    
+            const createResponse = await ShoppingListServices.createShoppingList({
+                name: `Default List for User ${userId}`,
+                created_by: userId,
+                created_at: new Date
+            });
+    
+            if (createResponse.success && createResponse.data) {
+                return {
+                    success: true,
+                    data: createResponse.data.id,
+                    message: 'New shopping list created successfully',
+                };
+            }
+    
             return {
                 success: false,
-                message: 'Error adding ingredient to shopping list',
-                errorCode: error.code || 'UNKNOWN_ERROR',
+                message: 'Failed to create a new shopping list',
+            };
+        } catch (error: any) {
+            console.error('Error in getOrCreateShoppingListByUserId:', error);
+            return {
+                success: false,
+                message: 'Error retrieving or creating shopping list',
+                errorCode: error.message,
             };
         }
     }
+    
     static async toggleItemPurchasedStatus(itemId: number): Promise<boolean> {
         try {
             const query = `
@@ -118,6 +137,44 @@ export class ShoppingListServices {
         } catch (error: any) {
             console.error('Error in toggleItemPurchasedStatus:', error);
             throw new Error('Error updating item status');
+        }
+    }
+    
+    static async addIngredientToShoppingList(userId: number, ingredientToAdd: IngredientToShoppingListDto): Promise<ApiResponse> {
+        try {
+            // Obtener o crear lista de compras del usuario
+            const shoppingListResponse = await ShoppingListServices.getOrCreateShoppingListByUserId(userId);
+    
+            if (!shoppingListResponse.success || !shoppingListResponse.data) {
+                return {
+                    success: false,
+                    message: 'Unable to get or create shopping list for the user',
+                };
+            }
+    
+            const shoppingListId = shoppingListResponse.data;
+    
+            const ingredientId = await IngredientServices.findOrCreateIngredient(ingredientToAdd.ingredient);
+    
+            const query = `
+                INSERT INTO shopping_list_items (shopping_list_id, ingredient_id, quantity, is_purchased)
+                VALUES ($1, $2, $3, $4)
+                RETURNING id, shopping_list_id, ingredient_id;
+            `;
+            const result = await pool.query(query, [shoppingListId, ingredientId, ingredientToAdd.quantity, false]);
+    
+            return {
+                success: true,
+                message: 'Ingredient added to shopping list successfully',
+                data: result.rows[0],
+            };
+        } catch (error: any) {
+            console.error('Error in addIngredientToShoppingList:', error);
+            return {
+                success: false,
+                message: 'Error adding ingredient to shopping list',
+                errorCode: error.message,
+            };
         }
     }
     

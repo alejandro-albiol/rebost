@@ -37,7 +37,7 @@ export class ShoppingListController {
         }
 
         try {
-            const response = await ShoppingListServices.getShoppingListByUserId(userId);
+            const response = await ShoppingListServices.getShoppingListContentByUserId(userId);
             res.status(response.success ? 200 : 404).json(response);
         } catch (error: any) {
             res.status(500).json({
@@ -49,22 +49,19 @@ export class ShoppingListController {
     }
 
     static async addIngredient(req: Request, res: Response): Promise<void> {
-        
+        const userId = parseInt(req.params.userId); // Obtener del parámetro
         const formattedData = FormDataFormatter.formatShoppingListData(req.body);
-
-        const ingredientToAdd: IngredientToShoppingListDto = formattedData
     
-        if (!ingredientToAdd.ingredient) {
+        if (!userId || !formattedData.ingredient) {
             res.status(400).json({
                 success: false,
-                message: 'Ingredient is required',
+                message: 'UserId and ingredient are required',
             });
             return;
         }
     
         try {
-            const response = await ShoppingListServices.addIngredientToShoppingList(ingredientToAdd);
-    
+            const response = await ShoppingListServices.addIngredientToShoppingList(userId, formattedData);
             res.status(response.success ? 201 : 400).json(response);
         } catch (error: any) {
             res.status(500).json({
@@ -73,6 +70,7 @@ export class ShoppingListController {
             });
         }
     }
+    
     
     static async togglePurchased(req: Request, res: Response): Promise<void> {
         const itemId: number = parseInt(req.params.itemId);

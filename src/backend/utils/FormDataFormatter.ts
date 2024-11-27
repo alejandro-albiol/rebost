@@ -1,4 +1,4 @@
-import { IngredientToShoppingListDto } from "../models/dtos/IngredientToShoppingListDto";
+import { IngredientToShoppingListDto } from "../models/dtos/IngredientToShoppingListDto.js";
 
 export class FormDataFormatter {
 

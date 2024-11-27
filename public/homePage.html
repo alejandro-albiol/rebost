@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/homePage.css">
+    <script src="../public/src/showShoppingList.js"></script>
     <title>Home Page</title>
 </head>
 <body>
@@ -11,7 +12,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Ingredients for the recipe</h2>
-            <form id="ingredientForm" action="api/v1/shoppinglist/:ingredientId">
+            <form id="ingredientForm">
                 <label for="ingredient">Ingredients:</label>
                 <input type="text" id="productForRecipeAI" name="productForRecipeAI" placeholder="Example: Tomato" required>
                 <button type="submit">Create recipe</button>
@@ -20,13 +21,28 @@
         <div class="right-section">
             <div class="form-container">
                 <h2>Add products to the shopping list</h2>
-                <form id="addToShoppingList">
-                    <label for="product">Ingredient:</label>
-                    <input type="text" id="name" name="name" placeholder="Example: Bread" required>
-                    <label for="product">Quantity:</label>
-                    <input type="text" id="quantity" name="quantity" placeholder="Example: 2" required>
-                    <button type="submit">Add product</button>
-                </form>
+                <form id="add-product-to-shopping-list" data-shopping-list-id="1">
+                    <label for="ingredient-name">Nombre del ingrediente:</label>
+                    <input type="text" id="ingredient-name" name="ingredientName" placeholder="Ej. Pollo" required />
+                  
+                    <label for="quantity">Cantidad:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" placeholder="Ej. 10" required />
+                  
+                    <label for="format">Formato:</label>
+                    <select id="format" name="format">
+                      <option value="units">Unidades</option>
+                      <option value="kg">Kilogramos</option>
+                      <option value="g">Gramos</option>
+                      <option value="L">Litros</option>
+                      <option value="ml">Mililitros</option>
+                    </select>
+                  
+                    <input type="number" id="format-value" name="formatValue" placeholder="Ej. 1.5" step="0.01" />
+                  
+                    <button type="submit">Añadir a la lista</button>
+                  </form>
+                  
+                  <div id="response-message"></div>                  
                 <h2>Shopping list</h2>
                 <ul id="productList"></ul>
             </div>
