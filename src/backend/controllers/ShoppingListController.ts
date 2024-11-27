@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ShoppingListServices } from '../services/ShoppingListServices.js';
-import { Ingredient } from '../models/interfaces/Ingredient.js';
-import { IngredientToShoppingListDto } from '../models/dtos/IngredientInShoppingListDto.js';
+import { IngredientToShoppingListDto } from '../models/dtos/IngredientToShoppingListDto.js';
+import { FormDataFormatter } from '../utils/FormDataFormatter.js';
 
 export class ShoppingListController {
     static async createShoppingList(req: Request, res: Response):Promise<void> {
@@ -49,7 +49,10 @@ export class ShoppingListController {
     }
 
     static async addIngredient(req: Request, res: Response): Promise<void> {
-        const ingredientToAdd: IngredientToShoppingListDto = req.body
+        
+        const formattedData = FormDataFormatter.formatShoppingListData(req.body);
+
+        const ingredientToAdd: IngredientToShoppingListDto = formattedData
     
         if (!ingredientToAdd.ingredient) {
             res.status(400).json({

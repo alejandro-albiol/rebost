@@ -1,5 +1,5 @@
 import pool from "../configuration/dataBaseConfig.js";
-import { IngredientToShoppingListDto } from "../models/dtos/IngredientInShoppingListDto.js";
+import { IngredientToShoppingListDto } from "../models/dtos/IngredientToShoppingListDto.js";
 import { ApiResponse } from "../models/interfaces/ApiResponse.js";
 import { Ingredient } from "../models/interfaces/Ingredient.js";
 import { ShoppingList } from "../models/interfaces/ShoppingList.js";

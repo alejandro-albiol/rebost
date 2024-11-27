@@ -11,7 +11,7 @@
     <div class="container">
         <div class="form-container">
             <h2>Ingredients for the recipe</h2>
-            <form id="ingredientForm">
+            <form id="ingredientForm" action="api/v1/shoppinglist/:ingredientId">
                 <label for="ingredient">Ingredients:</label>
                 <input type="text" id="ingredient" name="ingredient" placeholder="Example: Tomato" required>
                 <button type="submit">Create recipe</button>
