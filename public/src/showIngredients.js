@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield axios.get("http://localhost:3000/api/v1/ingredients");
+    const result = yield axios.get(`http://localhost:3000/api/v1/inventory/`);
     let htmlIngredients = "<table><thead><td>Name</td><td>Format</td><td>Actualizar</td><td>Eliminar</td></thead>";
     result.data.forEach((ingredients) => { htmlIngredients += `<tr><td>${ingredients.name}</td><td>${ingredients.format}</td><td><a class="update-button" href="http://localhost:3000/inventory/${ingredients.id}"><img  width="8px" src="../../media/icon/lapiz.png"></a></td><td><img class="delete-button" id="delete-${ingredients.id}" width="8px" src="../../media/icon/basura.png"></td></tr>`; });
     htmlIngredients += "</table>";
