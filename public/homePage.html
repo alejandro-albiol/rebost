@@ -22,8 +22,8 @@
             <div class="form-container">
                 <h2>Add products to the shopping list</h2>
                 <form id="add-product-to-shopping-list" data-shopping-list-id="1">
-                    <label for="ingredient-name">Nombre del ingrediente:</label>
-                    <input type="text" id="ingredient-name" name="ingredientName" placeholder="Ej. Pollo" required />
+                    <label for="ingredient-name">Ingredient:</label>
+                    <input type="text" id="ingredient-name" name="ingredientName" placeholder="Ej. Chicken" required />
                   
                     <label for="quantity">Quantity:</label>
                     <input type="number" id="quantity" name="quantity" min="1" placeholder="Ej. 10" required />
@@ -42,9 +42,11 @@
                     <button type="submit">Add to list</button>
                   </form>
                   
-                  <div id="response-message"></div>                  
-                <h2>Shopping list</h2>
-                <ul id="productList"></ul>
+                    <div id="shopping-list-container">
+                        <h2>Shopping list</h2>
+                        <ul id="shoppingList"></ul>
+                    </div>                  
+               
             </div>
 
         </div>

@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         try {
             // Enviar datos al backend
-            const response = yield axios.post('http://localhost:3000/api/v1/ingredients', ingredientData);
+            const response = yield axios.post('http://localhost:3000/api/v1/homePage', ingredientData);
             if (response.status === 200 || response.status === 201) {
                 // Crear nuevo elemento de lista con el ID del backend
                 const listItem = document.createElement("li");
