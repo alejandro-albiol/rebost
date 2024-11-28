@@ -1,31 +1,25 @@
 /* Estilos globales */
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f5f2;
+    font-family: 'Arial', sans-serif; /* Tipografía sencilla y moderna */
+    background-color: #f8f5f2; /* Tono beige claro */
     margin: 0;
     display: flex;
+    flex-direction: column; /* Los elementos se organizarán de arriba hacia abajo */
     justify-content: center;
     align-items: center;
     height: 100vh;
     color: #333;
-}
-
-/* Contenedor general */
-.form-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+    text-align: center; /* Centrado de todo el contenido */
 }
 
 /* Encabezado */
 h1 {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
-    color: #d62300;
-    text-align: center;
-    margin-bottom: 20px;
+    color: #d62300; /* Rojo Burger King */
+    margin-bottom: 30px; /* Espacio entre el título y el formulario */
+    line-height: 1.4;
+    width: 80%; /* Limita el ancho para que no ocupe todo el espacio */
 }
 
 /* Formulario */
@@ -37,7 +31,7 @@ form {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    margin: 0 auto;
+    margin-bottom: 30px; /* Espacio debajo del formulario */
 }
 
 /* Etiquetas */
@@ -45,7 +39,7 @@ label {
     font-weight: bold;
     margin-bottom: 5px;
     display: inline-block;
-    color: #d62300;
+    color: #d62300; /* Rojo Burger King */
 }
 
 /* Campos de entrada */
@@ -60,79 +54,66 @@ input[type="password"] {
     font-size: 16px;
 }
 
-/* Botón centrado */
+/* Botón */
 button {
-    background-color: #ffc107;
+    background-color: #ffc107; /* Amarillo Burger King */
     color: #fff;
     font-size: 16px;
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin: 0 auto; /* Esto centra el botón horizontalmente */
-    display: block; /* Asegura que el botón es un bloque */
+    text-decoration: none;
 }
 
 button:hover {
-    background-color: #d62300;
+    background-color: #d62300; /* Rojo Burger King en el hover */
 }
-/* Estilos básicos */
-body {
-  font-family: Arial, sans-serif;
-  margin: 20px;
-  background-color: #f9f9f9;
-}
-h1 {
-  text-align: center;
-}
-.form-container {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-form p {
-  margin-bottom: 20px;
-}
-label {
-  font-weight: bold;
-}
-input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-.help-text {
-  display: none;
-  font-size: 0.9em;
-  color: gray;
-  margin-top: 5px;
-}
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-button:hover {
-  background-color: #0056b3;
-}
+
+/* Enlace para registrarse */
 a {
-  display: block;
-  text-align: center;
-  margin-top: 10px;
-  color: #007bff;
+    color: #d62300; /* Rojo Burger King */
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
 }
+
 a:hover {
-  text-decoration: underline;
+    color: #ffc107; /* Amarillo Burger King al pasar el mouse */
 }
+ 
+  input:focus + .help-text {
+    display: block;
+  }
+  .help-text {
+    display: none;
+    color: #666;
+    font-size: 0.8em;
+    margin-top: 5px;
+    width: 300px; /* Ancho fijo para todos los mensajes de ayuda */
+    min-height: 1.2em; /* Altura mínima aunque esté vacío */
+    position: absolute; /* Para que no afecte al flujo del documento */
+  }
+  
+  /* Agregamos posición relativa al contenedor */
+  p {
+    position: relative;
+    margin-bottom: 25px; /* Espacio para el texto de ayuda */
+  }
+  
+  input:focus + .help-text {
+    display: block;
+  }
+  /* ... existing code ... */
+
+form button {
+    margin-top: 30px; /* Aumentamos el margen superior del botón */
+  }
+  
+  /* O alternativamente, si prefieres ajustar el espacio desde el último campo */
+  form p:last-of-type {
+    margin-bottom: 35px; /* Aumentamos el margen inferior del último párrafo */
+  }

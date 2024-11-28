@@ -8,17 +8,49 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-document.addEventListener("DOMContentLoaded", () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield axios.get(`http://localhost:3000/api/v1/inventory/`);
-    let htmlIngredients = "<table><thead><td>Name</td><td>Format</td><td>Actualizar</td><td>Eliminar</td></thead>";
-    result.data.forEach((ingredients) => { htmlIngredients += `<tr><td>${ingredients.name}</td><td>${ingredients.format}</td><td><a class="update-button" href="http://localhost:3000/inventory/${ingredients.id}"><img  width="8px" src="../../media/icon/lapiz.png"></a></td><td><img class="delete-button" id="delete-${ingredients.id}" width="8px" src="../../media/icon/basura.png"></td></tr>`; });
-    htmlIngredients += "</table>";
-    document.getElementById("storage").innerHTML = htmlIngredients;
-    document.querySelectorAll(".delete-button").forEach((button) => {
-        button.addEventListener("click", (e) => __awaiter(void 0, void 0, void 0, function* () {
-            const id = e.target.id.split("-")[1];
-            const result = yield axios.delete(`http://localhost:3000/api/v1/ingredients/${id}`);
-            location.reload();
-        }));
-    });
-}));
+document.addEventListener("DOMContentLoaded", () => {
+    const formContainer = document.getElementById("add-product-to-shopping-list");
+    const productList = document.getElementById("productList");
+    formContainer === null || formContainer === void 0 ? void 0 : formContainer.addEventListener("submit", (e) => __awaiter(void 0, void 0, void 0, function* () {
+        e.preventDefault();
+        // Obtener los valores del formulario
+        const formData = new FormData(e.target);
+        const ingredientData = {
+            name: formData.get("ingredientName"),
+            format: formData.get("quantity")
+        };
+        try {
+            // Enviar datos al backend
+            const response = yield axios.post('http://localhost:3000/api/v1/ingredients', ingredientData);
+            if (response.status === 200 || response.status === 201) {
+                // Crear nuevo elemento de lista con el ID del backend
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `
+                    <span>${ingredientData.name} - ${ingredientData.format}</span>
+                    <button class="remove-ingredient" data-id="${response.data.id}">X</button>
+                `;
+                // Agregar el nuevo ingrediente a la lista
+                productList === null || productList === void 0 ? void 0 : productList.appendChild(listItem);
+                // Limpiar el formulario
+                e.target.reset();
+                // Agregar funcionalidad para eliminar ingrediente
+                const removeButton = listItem.querySelector(".remove-ingredient");
+                removeButton === null || removeButton === void 0 ? void 0 : removeButton.addEventListener("click", () => __awaiter(void 0, void 0, void 0, function* () {
+                    const ingredientId = removeButton.getAttribute("data-id");
+                    try {
+                        yield axios.delete(`http://localhost:3000/api/v1/ingredients/${ingredientId}`);
+                        listItem.remove();
+                    }
+                    catch (error) {
+                        console.error("Error al eliminar ingrediente:", error);
+                        alert("No se pudo eliminar el ingrediente");
+                    }
+                }));
+            }
+        }
+        catch (error) {
+            console.error("Error al guardar ingrediente:", error);
+            alert("No se pudo guardar el ingrediente");
+        }
+    }));
+});

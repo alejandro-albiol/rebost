@@ -4,10 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Storage Page</title>
+    <link rel="stylesheet" href="styles/storage.css">
 </head>
 <body>
     <h1>Storage:</h1>
-    <div id="storage"></div>
+    <div id="storage">
+        <form action="/inventory" method="POST">
+            <label for="ingredient-name">Ingredient:</label>
+            <input type="text" id="ingredient-name" name="ingredientName" placeholder="Ej. Pollo" required />
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="1" placeholder="Ej. 10" required />
+            <button type="submit">Add to Storage</button>
+        </form>
+    </div>
+    <div>
+        <ul id="productStorage"></ul>
+    </div>
     
 </body>
 </html>
