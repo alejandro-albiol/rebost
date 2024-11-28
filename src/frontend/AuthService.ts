@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (result.success) {
                 // Redirige al usuario a la página principal con su userID
-                const userID = result.data.id; // Asegúrate de que el ID del usuario está en result.data.id
+                const userID = result.data.id;
                 window.location.href = `/homepage/${userID}`;
             } else {
                 // Maneja el error de login

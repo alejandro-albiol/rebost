@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../src/InventoryService.js"></script>
+    <title>Inventory Page</title>
+    <link rel="stylesheet" href="../styles/storage.css">
+</head>
+<body>
+    <h1>Storage:</h1>
+    
+    <div id="inventory-container">
+        <!-- Aquí se mostrarán los ingredientes del inventario -->
+    </div>    
+    <div>
+        <input type="text" id="ingredientName" placeholder="Nombre del ingrediente" />
+        <input type="number" id="ingredientQuantity" placeholder="Cantidad" />
+        <button id="addIngredientBtn" onclick="handleAddIngredient(getUserIdFromStorage())">Añadir Ingrediente</button>
+    </div>
+    
+    <div>
+        <ul id="productStorage"></ul>
+    </div>
+    <button id="go-to-shopping-list">Home page</button>
+
+</body>
+</html>
