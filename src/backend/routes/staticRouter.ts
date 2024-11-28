@@ -7,16 +7,21 @@ const staticRouter = Express.Router();
 staticRouter.get('/register', (req: Express.Request, res: Express.Response) => {
     const targetFilePath = path.join(publicPath, "/register.html");
     res.sendFile(targetFilePath);
-})
+});
 
 staticRouter.get('/login', (req: Express.Request, res: Express.Response) => {
     const targetFilePath = path.join(publicPath, "/login.html");
     res.sendFile(targetFilePath);
-})
+});
 
 staticRouter.get('/homePage/:userId', (req: Express.Request, res: Express.Response) => {
     const targetFilePath = path.join(publicPath, "/homePage.html");
     res.sendFile(targetFilePath);
-})
+});
 
-export {staticRouter};
+staticRouter.get('/inventory/:userId', (req: Express.Request, res: Express.Response) => {
+    const targetFilePath = path.join(publicPath, "/inventory.html");
+    res.sendFile(targetFilePath);
+});
+
+export { staticRouter };
