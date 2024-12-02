@@ -3,7 +3,7 @@ import { IngredientServices } from '../services/IngredientServices.js';
 import { Ingredient } from '../models/interfaces/Ingredient.js';
 
 export class IngredientController {
-    static async registerIngredient(req: Request, res: Response):Promise<void> {
+    static async registerOrFindIngredient(req: Request, res: Response):Promise<void> {
         const ingredient:Ingredient = req.body;
         if (!ingredient.name || !ingredient.format) {
             res.status(400).json({
@@ -12,7 +12,7 @@ export class IngredientController {
             });
         }
         try {
-            const response = await IngredientServices.createIngredient(ingredient);
+            const response = await IngredientServices.findOrCreateIngredient(ingredient);
             res.status(response.success ? 201 : 400).json(response);
         } catch (error) {
             res.status(500).json({ 

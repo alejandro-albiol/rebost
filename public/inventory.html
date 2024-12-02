@@ -3,26 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../src/InventoryService.js"></script>
+    <script src="../src/InventoryServiceFrontend.js"></script>
     <title>Inventory Page</title>
     <link rel="stylesheet" href="../styles/inventory.css">
 </head>
 <body>
-    <h1>Storage:</h1>
-    
-    <div id="inventory-container">
-        <!-- Aquí se mostrarán los ingredientes del inventario -->
-    </div>    
-    <div>
-        <input type="text" id="ingredientName" placeholder="Ingredient" />
-        <input type="number" id="ingredientQuantity" placeholder="Quantity" />
-        <button id="addIngredientBtn" onclick="handleAddIngredient(getUserIdFromStorage())">Add ingredient</button>
-    </div>
-    
-    <div>
-        <ul id="productStorage"></ul>
-    </div>
-    <button id="go-to-shopping-list">Home page</button>
+    <h1>Inventory:</h1>
+    <div class="add-ingredient-form">
+        <div class="form-group">
+            <label for="ingredientName">Ingredient Name:</label>
+            <input type="text" id="ingredientName" placeholder="Enter ingredient name" required />
+        </div>
+        
+        <div class="form-group">
+            <label for="ingredientFormat">Format:</label>
+            <select id="ingredientFormat" name="format" required>
+                <option value="">Select format</option>
+                <option value="units">units</option>
+                <option value="kg">Kg</option>
+                <option value="g">gr</option>
+                <option value="L">L</option>
+                <option value="ml">ml</option>
+            </select>
+        </div>
 
+        <div class="form-group">
+            <label for="ingredientQuantity">Quantity:</label>
+            <input 
+                type="number" 
+                id="ingredientQuantity" 
+                placeholder="Enter quantity" 
+                step="0.01" 
+                min="0" 
+                required 
+            />
+        </div>
+
+        <button id="addIngredientBtn" class="btn-primary">Add ingredient</button>
+    </div>
+
+    <div id="inventory-container"></div>    
+    <button id="go-to-home" class="btn-secondary">Home page</button>
 </body>
 </html>

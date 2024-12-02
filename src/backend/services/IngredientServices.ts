@@ -54,7 +54,7 @@ export class IngredientServices {
         return { value: parseFloat(value), unit: unit as IngredientFormat['unit'] };
     }
 
-    static async findOrCreateIngredient(ingredientToAdd:Ingredient): Promise<number> {
+    static async findOrCreateIngredient(ingredientToAdd:Ingredient): Promise<ApiResponse> {
         try {
             const query = `
                 SELECT id 
@@ -64,7 +64,11 @@ export class IngredientServices {
             const result = await pool.query(query, [ingredientToAdd.name]);
     
             if (result && result.rowCount && result.rowCount > 0) {
-                return result.rows[0].id;
+                return {
+                    success: true,
+                    message: 'Ingredient found successfully',
+                    data: result.rows[0].id,
+                };
             } else {
                 const insertIngredientQuery = `
                     INSERT INTO ingredients (name, format)
@@ -75,11 +79,20 @@ export class IngredientServices {
                     ? JSON.stringify(ingredientToAdd.format)
                     : null;
                 const newIngredient = await pool.query(insertIngredientQuery, [ingredientToAdd.name, format]);
-                return newIngredient.rows[0].id;
+                return {
+                    success: true,
+                    message: 'Ingredient created successfully',
+                    data: newIngredient.rows[0].id,
+                };
             }
         } catch (error: any) {
             console.error('Error in findOrCreateIngredient:', error);
-            throw new Error('Error finding or creating ingredient');
+            return {
+                success: false,
+                message: 'Error finding or creating ingredient',
+                errorCode: error.code || 'UNKNOWN_ERROR',
+                data: error.detail || null,
+            };
         }
     }
     

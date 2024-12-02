@@ -4,53 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/homePage.css">
-    <script src="../src/shoppingListService.js"></script>
+    <script src="../src/HomePageServices.js"></script>
     <title>Home Page</title>
 </head>
 <body>
-    <h1>Recipe creation and shopping lists</h1>
-    <div class="container">
-        <div class="form-container">
-            <h2>Ingredients for the recipe</h2>
-            <form id="ingredientForm">
-                <label for="ingredient">Ingredients:</label>
-                <input type="text" id="productForRecipeAI" name="productForRecipeAI" placeholder="Example: Tomato" required>
-                <button type="submit">Create recipe</button>
-            </form>
-        </div>
-        <div class="right-section">
-            <div class="form-container">
-                <h2>Add products to the shopping list</h2>
-                <form id="add-product-to-shopping-list" data-shopping-list-id="1">
-                    <label for="ingredient-name">Ingredient:</label>
-                    <input type="text" id="ingredient-name" name="ingredientName" placeholder="Ej. Chicken" required />
-                  
-                    <label for="quantity">Quantity:</label>
-                    <input type="number" id="quantity" name="quantity" min="1" placeholder="Ej. 10" required />
-                  
-                    <label for="format">Format:</label>
-                    <select id="format" name="format">
-                      <option value="units">units</option>
-                      <option value="kg">Kg</option>
-                      <option value="g">gr</option>
-                      <option value="L">L</option>
-                      <option value="ml">ml</option>
-                    </select>
-                  
-                    <input type="number" id="format-value" name="formatValue" placeholder="Ej. 1.5" step="0.01" />
-                  
-                    <button type="submit">Add to list</button>
-                  </form>
-                  
-                    <div id="shopping-list-container">
-                        <h2>Shopping list</h2>
-                        <ul id="shoppingList"></ul>
-                    </div>                  
-               
-            </div>
+    <div class="input-section">
+        <h2>Generate Recipes</h2>
+        <form id="recipe-form">
+            <input type="text" id="ingredients-input" placeholder="Enter ingredients (separated by commas)">
+            <button type="submit">Generate</button>
+        </form>
+        <button id="use-inventory-btn">Use Inventory Ingredients</button>
+    </div>
 
+    <div class="main-container">
+        <div class="recipe-generator-container">
+            <h2>Recipes</h2>
+            <div id="recipes-container"></div>
+        </div>
+
+        <div class="shopping-list-container">
+            <h2>Shopping List</h2>
+            <div id="shopping-list-container"></div>
         </div>
     </div>
-    <button id="go-to-inventory">Go to inventory</button>
+
+    <button id="go-to-inventory">Go to Inventory</button>
 </body>
 </html>

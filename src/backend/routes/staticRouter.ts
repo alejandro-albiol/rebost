@@ -14,7 +14,7 @@ staticRouter.get('/login', (req: Express.Request, res: Express.Response) => {
     res.sendFile(targetFilePath);
 });
 
-staticRouter.get('/homePage/:userId', (req: Express.Request, res: Express.Response) => {
+staticRouter.get('/home/:userId', (req: Express.Request, res: Express.Response) => {
     const targetFilePath = path.join(publicPath, "/homePage.html");
     res.sendFile(targetFilePath);
 });

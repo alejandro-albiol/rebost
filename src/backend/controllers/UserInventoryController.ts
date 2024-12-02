@@ -12,8 +12,15 @@ export class UserInventoryController {
             });
         }    
         try {
-            const response = await UserInventoryService.addIngredientToInventory(newIngredientToInventory);
-            res.status(response.success ? 201 : 400).json(response);
+            const response = await UserInventoryService.addOrUpdateIngredientInInventory(newIngredientToInventory);
+            if (response) {
+                res.status(response.success ? 201 : 400).json(response);
+            } else {
+                res.status(400).json({
+                    success: false,
+                    message: 'Response is undefined',
+                });
+            }
         } catch (error) {
             res.status(500).json({
                 success: false,
@@ -34,4 +41,24 @@ export class UserInventoryController {
             });
         }
     }
+
+    static async updateIngredientQuantity(req: Request, res: Response):Promise<void> {
+        const ingredientData:IngredientInInventoryDto = req.body;
+        try {
+            const response = await UserInventoryService.updateIngredientQuantity(ingredientData);
+            if (response) {
+                res.status(response.success ? 200 : 400).json(response);
+            } else {
+                res.status(400).json({
+                    success: false,
+                    message: 'Response is undefined',
+                });
+            }
+        } catch (error) {
+            res.status(500).json({
+                success: false,
+                message: 'Internal server error',
+            });
+        }
+    }   
 }

@@ -53,4 +53,44 @@ export class UserInventoryService {
             };
         }
     }
+
+    static async updateIngredientQuantity(ingredientData: IngredientInInventoryDto) {
+        try {
+            const query = `UPDATE user_inventory SET quantity = $1 WHERE id = $2`;
+            await pool.query(query, [ingredientData.quantity, ingredientData.id]);
+        } catch (error: any) {
+            return {
+                success: false,
+                message: 'Error updating ingredient quantity',
+                errorCode: error.code || 'UNKNOWN_ERROR',
+            };
+        }
+    }
+
+    static async addOrUpdateIngredientInInventory(ingredientData: IngredientInInventoryDto) {
+        try {
+            // Primero verificamos si el ingrediente ya existe para este usuario
+            const existingInventory = await this.getInventoryByUser(ingredientData.user_id!);
+            
+            if (existingInventory.success && existingInventory.data) {
+                const existingIngredient = existingInventory.data.find(
+                    (item: any) => item.ingredient_id === ingredientData.ingredient_id
+                );
+
+                if (existingIngredient) {
+                    // Actualizar cantidad existente
+                    return await this.updateIngredientQuantity(ingredientData);
+                }
+            }
+            
+            // Si no existe, añadir nuevo
+            return await this.addIngredientToInventory(ingredientData);
+        } catch (error) {
+            return {
+                success: false,
+                message: 'Error processing inventory operation',
+                error: error
+            };
+        }
+    }
 }
